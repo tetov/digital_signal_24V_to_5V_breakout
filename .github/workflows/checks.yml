@@ -1,0 +1,18 @@
+name: run checks on project
+
+on:
+  push:
+
+jobs:
+  checks:
+    env:
+      PROJECT_SLUG: digital_signal_24V_to_5V_breakout
+      PROJECT_TITLE: Digital signal 24V to 5V breakout
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: INTI-CMNB/KiBot@v1_k6
+        with:
+          config: .github/workflows/resources/checks.kibot.yml
+          schema: "${{ env.PROJECT_SLUG }}.kicad_sch"
+          board: "${{ env.PROJECT_SLUG  }}.kicad_pcb"

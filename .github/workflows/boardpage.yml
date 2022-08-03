@@ -1,0 +1,52 @@
+name: create boardpage
+on: [push]
+jobs:
+  create-boardpage:
+    env:
+      PROJECT_SLUG: digital_signal_24V_to_5V_breakout
+      PROJECT_TITLE: Digital signal 24V to 5V breakout
+    runs-on: ubuntu-latest
+    container:
+      image: yaqwsx/kikit:v1.0.2
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: mkdir output present
+      - run: git describe --always
+      - uses: INTI-CMNB/KiBot@v1_k6
+        with:
+          # Required - kibot config file
+          config: .github/workflows/resources/boardpage.kibot.yml
+          # optional - prefix to output defined in config
+          dir: output
+          # optional - schematic file
+          schema: "${{ env.PROJECT_SLUG }}.kicad_sch"
+          # optional - PCB design file
+          board: "${{ env.PROJECT_SLUG }}.kicad_pcb"
+      - run: kikit fab jlcpcb --no-drc "$PROJECT_SLUG.kicad_pcb" output
+      - run: >
+          kikit present boardpage
+          --description .github/workflows/resources/boardpage.md
+          --board "$PROJECT_TITLE" "$PROJECT_SLUG" "$PROJECT_SLUG.kicad_pcb"
+          --resource output/gerbers.zip
+          --resource output/bom.html
+          --resource output/schematic.pdf
+          --repository "https://github.com/$GITHUB_REPOSITORY"
+          --name "$PROJECT_TITLE"
+          present
+      - run: sed -E -i 's#(<a href=")boards/\w.+-(gerbers\.zip">Download gerbers</a>)#\1output/\2#' present/index.html
+      - uses: actions/upload-artifact@v3
+        with:
+          name: boardpage
+          path: present
+          retention-days: 30
+
+      - uses: crazy-max/ghaction-github-pages@a117e4aa1fb4854d021546d2abdfac95be568a3a
+        if: startsWith( github.ref, 'refs/tags/v')
+        with:
+          target_branch: gh-pages
+          build_dir: present
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
