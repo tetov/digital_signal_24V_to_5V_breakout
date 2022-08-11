@@ -13,6 +13,8 @@ jobs:
         with:
           fetch-depth: 0
       - run: mkdir output present
+        # fix from: https://github.com/actions/checkout/issues/760
+      - run: git config --global --add safe.directory /__w/digital_signal_24V_to_5V_breakout/digital_signal_24V_to_5V_breakout
       - run: git describe --always
       - uses: INTI-CMNB/KiBot@v2_k6
         with:
