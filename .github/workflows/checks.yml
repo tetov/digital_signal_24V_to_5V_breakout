@@ -10,7 +10,7 @@ jobs:
       PROJECT_TITLE: Digital signal 24V to 5V breakout
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: INTI-CMNB/KiBot@v2_k6
         with:
           config: .github/workflows/resources/checks.kibot.yml
