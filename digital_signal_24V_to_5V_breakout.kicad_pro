@@ -336,7 +336,7 @@
       "no_connect_dangling": "warning",
       "pin_not_connected": "error",
       "pin_not_driven": "error",
-      "pin_to_pin": "warning",
+      "pin_to_pin": "error",
       "power_pin_not_driven": "error",
       "similar_labels": "warning",
       "unannotated": "error",
@@ -465,7 +465,7 @@
       "model_mode": 0,
       "workbook_filename": ""
     },
-    "page_layout_descr_file": "",
+    "page_layout_descr_file": "wider_rev_id.kicad_wks",
     "plot_directory": "",
     "spice_adjust_passive_values": false,
     "spice_external_command": "spice \"%I\"",
@@ -491,7 +491,7 @@
     "company": "Automatic Control, LTH",
     "drawn_by": "Anton Tetov",
     "git_describe": "v0.0.0-0-gxxxxxxx",
-    "git_url": "https://gitlab.control.lth.se/tetov/digital-signal-24v-to-5v-breakout",
+    "git_url": "https://gitlab.control.lth.se/tetov/digital_signal_24V_to_5V_breakout",
     "project_title": "PCB-A experiment"
   }
 }
