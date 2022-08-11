@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: INTI-CMNB/KiBot@v1_k6
+      - uses: INTI-CMNB/KiBot@v2_k6
         with:
           config: .github/workflows/resources/checks.kibot.yml
           schema: "${{ env.PROJECT_SLUG }}.kicad_sch"
